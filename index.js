@@ -27,41 +27,57 @@ client.on("ready", () => {
 });
 
 //image welcome
+const applyText = (canvas, text) => {
+    const ctx = canvas.getContext('2d');
+    let fontSize = 70;
+
+    do {
+        ctx.font = `${fontSize -= 10}px sans-serif`;
+    } while (ctx.measureText(text).width > canvas.width - 300);
+
+    return ctx.font;
+};
+
 client.on('guildMemberAdd', async member => {
-	const channel = member.guild.channels.find(ch => ch.name === 'welcome');
-	if (!channel) return;
+    const channel = member.guild.channels.find(ch => ch.name === 'welcome');
+    if (!channel) return console.log(chalk.bgRed('ERR') + (`${welcomeMessageChannelID} channel was not found`));
 
-	const canvas = Canvas.createCanvas(700, 250);
-	const ctx = canvas.getContext('2d');
+    const canvas = Canvas.createCanvas(700, 250);
+    const ctx = canvas.getContext('2d');
 
-	const background = await Canvas.loadImage('./wallpaper.jpg');
-	ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+    const background = await Canvas.loadImage('./wallpaper.jpg');
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
-	ctx.strokeStyle = '#74037b';
-	ctx.strokeRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = '#74037b';
+    ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
-	// Slightly smaller text placed above the member's display name
-	ctx.font = '28px sans-serif';
-	ctx.fillStyle = '#ffffff';
-	ctx.fillText('Welcome to the server,', canvas.width / 2.5, canvas.height / 3.5);
+    ctx.font = '28px sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText('Welcome to the server,', canvas.width / 2.5, canvas.height / 3.5);
 
-	// Add an exclamation point here and below
-	ctx.font = applyText(canvas, `${member.displayName}!`);
-	ctx.fillStyle = '#ffffff';
-	ctx.fillText(`${member.displayName}!`, canvas.width / 2.5, canvas.height / 1.8);
+    ctx.font = applyText(canvas, `${member.displayName}!`);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(`${member.displayName}!`, canvas.width / 2.5, canvas.height / 1.8);
 
-	ctx.beginPath();
-	ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
-	ctx.closePath();
-	ctx.clip();
+    ctx.beginPath();
+    ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.clip();
 
-	const { body: buffer } = await snekfetch.get(member.user.displayAvatarURL);
-	const avatar = await Canvas.loadImage(buffer);
-	ctx.drawImage(avatar, 25, 25, 200, 200);
+    const avatar = await Canvas.loadImage(member.user.displayAvatarURL({
+        format: 'jpg'
+    }));
+    ctx.drawImage(avatar, 25, 25, 200, 200);
 
-	const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
+    const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
 
-	channel.send(`Welcome to the server, ${member}!`, attachment);
+    channel.send(`Welcome to the server, ${member}!`, attachment);
+});
+
+client.on('message', message => {
+    if (message.content === '!join') {
+        client.emit('guildMemberAdd', message.member);
+    }
 });
 
 
@@ -88,6 +104,16 @@ client.on('ready', () => {
         channel.setName(`Total Channels: ${client.channels.size}`)
     }, 60000)
 
+})
+
+client.on("message", (message) => {
+    if (member.user.bot) return;
+    if (message.member.hasPermission('ADMINISTRATOR')) return;
+    if (message.content.includes('disocrd.gg')) {
+        message.delete()
+        message.reply(`${member} you cannot post invites`);
+        console.log(chalk.bgYellow('INFO:') + (`invite sent by ${member} was successfully deleted`));
+    }
 })
 
 //dm new members and log in console
@@ -194,41 +220,41 @@ client.on("message", async message => {
 
     }
 
-     //ban
-  if (command === "ban") {
-    if (message.member.hasPermission('BAN_MEMBERS')) {
-    let member = message.mentions.members.first();
-    if (!member)
-      return message.reply("Please mention a valid member of this server");
-    if (!member.bannable)
-      return message.reply("I cannot ban this user! Do they have a higher role? Do I have ban permissions?");
+    //ban
+    if (command === "ban") {
+        if (message.member.hasPermission('BAN_MEMBERS')) {
+            let member = message.mentions.members.first();
+            if (!member)
+                return message.reply("Please mention a valid member of this server");
+            if (!member.bannable)
+                return message.reply("I cannot ban this user! Do they have a higher role? Do I have ban permissions?");
 
-    let reason = args.slice(1).join(' ');
-    if (!reason) reason = "No reason provided";
+            let reason = args.slice(1).join(' ');
+            if (!reason) reason = "No reason provided";
 
-    await member.ban(reason)
-      .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
-      console.log(chalk.bgYellow('INFO:') + (`${member.user.tag} has been banned by ${message.author.tag} because ${reason}`));
-    message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${reason}`);
-    } else {
-        return message.reply(`${member} you do not have permissions to use this`);
+            await member.ban(reason)
+                .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
+            console.log(chalk.bgYellow('INFO:') + (`${member.user.tag} has been banned by ${message.author.tag} because ${reason}`));
+            message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${reason}`);
+        } else {
+            return message.reply(`${member} you do not have permissions to use this`);
+        }
     }
-  }
-//coinflip
-  if (command === "coinflip") {
-    var coinflip = [
-        "Heads",
-        "Tails"
-      ];
-      var coinflips = coinflip[Math.floor(Math.random() * coinflip.length)];
-      message.channel.send(coinflips);
-  }
+    //coinflip
+    if (command === "coinflip") {
+        var coinflip = [
+            "Heads",
+            "Tails"
+        ];
+        var coinflips = coinflip[Math.floor(Math.random() * coinflip.length)];
+        message.channel.send(coinflips);
+    }
 
-  //ping
-  if (command === "ping") {
-    const m = await message.channel.send("Ping?");
-    m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
-  }
+    //ping
+    if (command === "ping") {
+        const m = await message.channel.send("Ping?");
+        m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
+    }
 
 
 
