@@ -18,7 +18,7 @@ const {
     addMemberToRole2Command,
     role2Permission,
     role2ID,
-    welcomeMessageChannelID
+    welcomeMessageChannelName
 } = require('./config.json');
 
 client.on("ready", () => {
@@ -39,7 +39,7 @@ const applyText = (canvas, text) => {
 };
 
 client.on('guildMemberAdd', async member => {
-    const channel = member.guild.channels.find(ch => ch.name === 'welcome');
+    const channel = member.guild.channels.find(ch => ch.name === name);
     if (!channel) return console.log(chalk.bgRed('ERR') + (`${welcomeMessageChannelID} channel was not found`));
 
     const canvas = Canvas.createCanvas(700, 250);
@@ -79,10 +79,6 @@ client.on('message', message => {
         client.emit('guildMemberAdd', message.member);
     }
 });
-
-
-
-
 
 
 //server status guildmembers
@@ -259,11 +255,6 @@ client.on("message", async message => {
 
 
 });
-
-
-
-
-
 
 
 client.login(botToken);
