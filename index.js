@@ -105,7 +105,7 @@ client.on('ready', () => {
 client.on("message", (message) => {
     if (member.user.bot) return;
     if (message.member.hasPermission('ADMINISTRATOR')) return;
-    if (message.content.includes('disocrd.gg')) {
+    if (message.content.includes('discord.gg')) {
         message.delete()
         message.reply(`${member} you cannot post invites`);
         console.log(chalk.bgYellow('INFO:') + (`invite sent by ${member} was successfully deleted`));
