@@ -39,7 +39,7 @@ const applyText = (canvas, text) => {
 };
 
 client.on('guildMemberAdd', async member => {
-    const channel = member.guild.channels.find(ch => ch.name === name);
+    const channel = member.guild.channels.find(ch => ch.name === "welcome");
     if (!channel) return console.log(chalk.bgRed('ERR') + (`${welcomeMessageChannelID} channel was not found`));
 
     const canvas = Canvas.createCanvas(700, 250);
@@ -80,7 +80,7 @@ client.on('message', message => {
     }
 });
 
-
+/*
 //server status guildmembers
 client.on('ready', () => {
     let guild = client.guilds.get(guildID);
@@ -111,7 +111,7 @@ client.on("message", (message) => {
         console.log(chalk.bgYellow('INFO:') + (`invite sent by ${member} was successfully deleted`));
     }
 })
-
+*/
 //dm new members and log in console
 client.on('guildMemberAdd', (member) => {
     if (member.user.bot) return;
