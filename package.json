@@ -11,7 +11,6 @@
   "dependencies": {
     "canvas": "^2.6.0",
     "chalk": "^3.0.0",
-    "discord-anti-spam": "^2.1.0",
     "discord.js": "^11.5.1",
     "guide": "^1.1.0"
   }

@@ -2,7 +2,6 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const chalk = require('chalk');
 const Canvas = require('canvas');
-const DiscordAntiSpam = require("discord-anti-spam");
 const {
     prefix,
     botActivity,
@@ -23,38 +22,6 @@ const {
     welcomeMessageChannelName
 } = require('./config.json');
 
-//anti spam
-const AntiSpam = new DiscordAntiSpam({
-    warnThreshold: 3, // Amount of messages sent in a row that will cause a warning.
-    banThreshold: 25, // Amount of messages sent in a row that will cause a ban
-    maxInterval: 2500, // Amount of time (in ms) in which messages are cosidered spam.
-    warnMessage: "{@user}, Please stop spamming.", // Message will be sent in chat upon warning.
-    banMessage: "**{user_tag}** has been banned for spamming.", // Message will be sent in chat upon banning.
-    maxDuplicatesWarning: 7, // Amount of same messages sent that will be considered as duplicates that will cause a warning.
-    maxDuplicatesBan: 15, // Amount of same messages sent that will be considered as duplicates that will cause a ban.
-    deleteMessagesAfterBanForPastDays: 1, // Amount of days in which old messages will be deleted. (1-7)
-    exemptPermissions: ["MANAGE_MESSAGES", "ADMINISTRATOR", "MANAGE_GUILD", "BAN_MEMBERS"], // Bypass users with at least one of these permissions
-    ignoreBots: true, // Ignore bot messages
-    verbose: false, // Extended Logs from module
-    ignoredUsers: [], // Array of string user IDs that are ignored
-    ignoredRoles: [], // Array of string role IDs or role name that are ignored
-    ignoredGuilds: [], // Array of string Guild IDs that are ignored
-    ignoredChannels: [] // Array of string channels IDs that are ignored
-  });
-   
-  AntiSpam.on("warnEmit", (member) => console.log(`Attempt to warn ${member.user.tag}.`));
-  AntiSpam.on("warnAdd", (member) => console.log(`${member.user.tag} has been warned.`));
-  AntiSpam.on("kickEmit", (member) => console.log(`Attempt to kick ${member.user.tag}.`));
-  AntiSpam.on("kickAdd", (member) => console.log(`${member.user.tag} has been kicked.`));
-  AntiSpam.on("banEmit", (member) => console.log(`Attempt to ban ${member.user.tag}.`));
-  AntiSpam.on("banAdd", (member) => console.log(`${member.user.tag} has been banned.`));
-  AntiSpam.on("dataReset", () => console.log("Module cache has been cleared."));
-   
-  client.on("ready", () => console.log(`Logged in as ${client.user.tag}.`));
-   
-  client.on("message", (msg) => {
-    AntiSpam.message(msg);
-  });
 
 
 
@@ -125,7 +92,7 @@ client.on('message', message => {
 //server status guildmembers
 client.on('ready', () => {
     let guild = client.guilds.get(guildID);
-    let channel = guild.channels.get(memberCountChannelID)
+    let channel = guild.channels.get("643282768939450368")
     setInterval(function () {
         channel.setName(`Member Count: ${guild.memberCount}`)
     }, 60000)
