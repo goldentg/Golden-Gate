@@ -34,7 +34,7 @@ client.on("guildMemberAdd", (guildMember) => {
     guildMember.addRole(guildMember.guild.roles.get(joinRole));
     console.log(chalk.bgYellow(`INFO:`) + (` New member ${guildMember} has been given the ${joinRole} role`));
 })
-
+/*
 //image welcome
 const applyText = (canvas, text) => {
     const ctx = canvas.getContext('2d');
@@ -88,6 +88,7 @@ client.on('message', message => {
         client.emit('guildMemberAdd', message.member);
     }
 });
+*/
 
 //server status guildmembers
 client.on('ready', () => {
