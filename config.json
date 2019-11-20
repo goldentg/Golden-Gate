@@ -1,11 +1,12 @@
     {
     "botToken": "NTgxNjA0NjI0MTEzNDY3Mzky.XdM2VA.Qtap_SdhXI8fsxCBLaioYL5ajeg",
     "prefix": "-",
+    "botActivity": "Online",
     "welcomeMessageChannelID": "581307001489981470",
     "joinRole": "Member",
     "ownerID": "",
     "guildID": "580582994226708495",
-    "memberCountChannelName": "welcome",
+    "memberCountChannelID": "welcome",
     "channelCountChannelID": "643322079516688394",
     "newMemberDMMessage": "Welcome to the server!",
     "addMemberToRole1Command": "",
