@@ -153,6 +153,7 @@ client.on("message", async message => {
             .setTimestamp()
             .setTitle("List of Bot Commands")
             .addField("-help", "Gives a list of commands")
+            .addField("-profile", "magnifies your or mentioned users profile")
             .addField(`${prefix}` + `${addMemberToRole1Command}`, `${role1Permission} ONLY`)
             .addField(`${prefix}` + `${addMemberToRole2Command}`, `${role2Permission} ONLY`)
             .addField("-clear", "ADMINISTRATOR ACCESS ONLY")
