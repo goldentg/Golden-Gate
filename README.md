@@ -39,17 +39,18 @@ After you have the required programs installed,  you can now download project Sh
 ### - Token - 
 Input a bot token into **`index.js`** at `botToken: "YOUR TOKEN HERE"`. Note that DOW requires full admin permissions on a server to work. 
 
+### - Config.json - 
+fill out required fields in order for the bot to work
+
 ### - Running the Bot - 
 Once the other steps are completed; simply run the bot with `node index.js` or run the `run.bat` file
 
 ### - Discord -
 Make sure to join our discord servers!
 
-* [Goldentg](https://discord.gg/6mw7AGH)
+** New server in development, stay tuned **
 
-* [Golden Codex Casual](https://discord.gg/SKEcRhw)
-
-Message GoldenCodex#4546 for bot assistance
+Message GoldenCodex#6950 for bot assistance
 
 ### - Support The Project - 
 If you enjoy this project, you can show your support by starting the repo ⭐ and joining our discord servers
