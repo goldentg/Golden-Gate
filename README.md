@@ -48,7 +48,9 @@ Once the other steps are completed; simply run the bot with `node index.js` or r
 ### - Discord -
 Make sure to join our discord servers!
 
-** New server in development, stay tuned **
+New discord server: 
+
+[Golden Codex HUB](https://discord.gg/GZ3xSkd)
 
 Message GoldenCodex#6950 for bot assistance
 
